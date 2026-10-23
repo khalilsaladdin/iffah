@@ -14,9 +14,15 @@ export function AudioProvider({ children }) {
 
   const audioRef = useRef(new Audio());
 
+  // Sinkronisasi volume audio
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
   useEffect(() => {
     const audio = audioRef.current;
-    audio.volume = volume;
 
     const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime);
@@ -116,9 +122,6 @@ export function AudioProvider({ children }) {
   const changeVolume = (val) => {
     const clamped = Math.max(0, Math.min(1, val));
     setVolume(clamped);
-    if (audioRef.current) {
-      audioRef.current.volume = clamped;
-    }
   };
 
   const stopAudio = () => {
@@ -153,6 +156,7 @@ export function AudioProvider({ children }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAudio() {
   const context = useContext(AudioContext);
   if (!context) {

@@ -12,7 +12,7 @@ import NightShieldModal from './components/NightShieldModal';
 import AudioPlayerBar from './components/AudioPlayerBar';
 import { AudioProvider } from './context/AudioContext';
 import { useDangerHours } from './utils/useDangerHours';
-import { Shield, Heart, Sparkles, Download, Moon } from 'lucide-react';
+import { Download, Moon } from 'lucide-react';
 
 function MainApp() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -21,7 +21,7 @@ function MainApp() {
   const [isNightShieldOpen, setIsNightShieldOpen] = useState(false);
 
   // Hook pendeteksi jam rawan malam (22:00 - 04:30)
-  const { isDangerTime, currentHourText } = useDangerHours();
+  const { isDangerTime } = useDangerHours();
 
   // Persistent Clean Days Streak
   const [streakData, setStreakData] = useState(() => {

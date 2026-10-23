@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { 
-  FileText, 
   Clock, 
   User, 
   ArrowRight, 
   X, 
-  Bookmark, 
-  Share2, 
-  Sparkles,
   BookOpen
 } from 'lucide-react';
 import { articlesData } from '../data/articlesData';

@@ -3,13 +3,9 @@ import {
   BookMarked, 
   Plus, 
   Calendar, 
-  Smile, 
-  Frown, 
   CheckCircle2, 
   Trash2, 
-  Sparkles,
-  Shield,
-  HelpCircle
+  Sparkles
 } from 'lucide-react';
 import { soundFx } from '../utils/audioHelper';
 

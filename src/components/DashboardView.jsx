@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { 
   Flame, 
-  ShieldCheck, 
   Award, 
   Sparkles, 
   RotateCcw, 
   ArrowRight, 
-  Heart, 
   BookOpen, 
   Users, 
   AlertTriangle,
@@ -14,7 +12,6 @@ import {
   CheckCircle,
   Plus,
   Moon,
-  Bed,
   Lock
 } from 'lucide-react';
 import confetti from 'canvas-confetti';

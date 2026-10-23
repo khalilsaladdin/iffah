@@ -4,45 +4,48 @@ import { soundFx } from '../utils/audioHelper';
 
 export default function InstallPwaModal({ isForceOpen, onCloseForce }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [isInstalled, setIsInstalled] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
+  
+  // Deteksi mode standalone secara lazy saat inisialisasi
+  const [isInstalled, setIsInstalled] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  });
+
+  const [isIOS] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+  });
+
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Deteksi jika sudah dalam mode standalone (sudah ter-install)
-    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-      setIsInstalled(true);
-      return;
-    }
-
-    // Deteksi perangkat iOS (Safari tidak mendukung beforeinstallprompt)
-    const userAgent = window.navigator.userAgent.toLowerCase();
-    const isAppleDevice = /iphone|ipad|ipod/.test(userAgent);
-    setIsIOS(isAppleDevice);
+    if (isInstalled) return;
 
     // Tangkap event instalasi browser (Chrome, Edge, Android)
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      // Tampilkan banner setelah 2 detik agar tidak mengganggu kesan pertama
+      // Tampilkan banner setelah 2.5 detik agar tidak mengganggu kesan pertama
       const dismissed = sessionStorage.getItem('iffah_install_dismissed');
       if (!dismissed) {
         setTimeout(() => setIsVisible(true), 2500);
       }
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    window.addEventListener('appinstalled', () => {
+    const handleAppInstalled = () => {
       setIsInstalled(true);
       setIsVisible(false);
       setDeferredPrompt(null);
-    });
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
-  }, []);
+  }, [isInstalled]);
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) return;

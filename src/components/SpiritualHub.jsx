@@ -2,19 +2,14 @@ import React, { useState } from 'react';
 import { 
   BookOpen, 
   Sparkles, 
-  Heart, 
-  ShieldCheck, 
   Volume2, 
   RotateCcw, 
   Check, 
   Copy, 
-  Share2, 
   Search,
-  BookMarked,
   Play,
   Pause,
   Headphones,
-  Music,
   Loader2
 } from 'lucide-react';
 import { quranVerses, propheticHadiths, islamicDuas, dzikirList } from '../data/spiritualData';

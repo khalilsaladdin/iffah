@@ -7,7 +7,7 @@ import {
   Droplets, 
   CheckCircle2, 
   Volume2, 
-  Sparkles,
+  Sparkles, 
   ArrowRight,
   Headphones,
   Play,
@@ -19,36 +19,27 @@ import { murottalTracks } from '../data/murottalData';
 
 export default function PanicModal({ isOpen, onClose }) {
   const [secondsLeft, setSecondsLeft] = useState(90);
-  const [isActive, setIsActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [breathPhase, setBreathPhase] = useState('Tarik Nafas...'); // Tarik Nafas, Tahan, Hembuskan
 
-  const { currentTrack, isPlaying, playTrack, togglePlay } = useAudio();
-
-  useEffect(() => {
-    if (isOpen) {
-      setSecondsLeft(90);
-      setIsActive(true);
-      setCurrentStep(0);
-      soundFx.playCalmingChime();
-    } else {
-      setIsActive(false);
-    }
-  }, [isOpen]);
+  const { currentTrack, isPlaying, playTrack } = useAudio();
 
   useEffect(() => {
     let timer = null;
-    if (isActive && secondsLeft > 0) {
+    if (isOpen) {
+      soundFx.playCalmingChime();
       timer = setInterval(() => {
-        setSecondsLeft((prev) => prev - 1);
+        setSecondsLeft((prev) => (prev > 0 ? prev - 1 : 0));
       }, 1000);
     }
-    return () => clearInterval(timer);
-  }, [isActive, secondsLeft]);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isOpen]);
 
   // Breathing cycle every 12 seconds
   useEffect(() => {
-    if (!isActive) return;
+    if (!isOpen) return;
     const interval = setInterval(() => {
       const sec = 90 - secondsLeft;
       const mod = sec % 12;
@@ -61,7 +52,7 @@ export default function PanicModal({ isOpen, onClose }) {
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [isActive, secondsLeft]);
+  }, [isOpen, secondsLeft]);
 
   if (!isOpen) return null;
 

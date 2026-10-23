@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import { 
   Sparkles, 
-  Flame, 
   ShieldAlert, 
   ShieldCheck, 
   Calculator, 
   Award, 
   CheckCircle2, 
-  AlertTriangle,
   Clock,
   BookOpen,
-  HeartHandshake,
-  Download
+  HeartHandshake
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { whyHatePornography, whyLoveIffah, iffahPledgeText } from '../data/hatePornLoveIffahData';
@@ -33,6 +30,7 @@ export default function IffahVault() {
   // State Ikrar
   const [pledgeName, setPledgeName] = useState('');
   const [isPledged, setIsPledged] = useState(false);
+  const [pledgeDate, setPledgeDate] = useState('');
 
   const handleSignPledge = (e) => {
     e.preventDefault();
@@ -44,6 +42,7 @@ export default function IffahVault() {
       spread: 80,
       origin: { y: 0.6 }
     });
+    setPledgeDate(new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }));
     setIsPledged(true);
   };
 
@@ -337,7 +336,7 @@ export default function IffahVault() {
                 MasyaAllah, Ikrar Resmi Tercatat!
               </h4>
               <p className="text-xs text-emerald-200 mb-3">
-                Atas nama: <strong>{pledgeName}</strong> pada tanggal {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                Atas nama: <strong>{pledgeName}</strong> pada tanggal {pledgeDate}
               </p>
               <p className="text-xs text-slate-300 leading-relaxed max-w-md mx-auto">
                 Pegang teguh sumpah ini. Jika suatu hari godaan datang menerjang, ingatlah nama Allah yang telah kamu sebut dalam ikrar ini.

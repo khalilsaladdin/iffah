@@ -9,7 +9,6 @@ import {
   RotateCcw, 
   ChevronUp, 
   ChevronDown, 
-  Sparkles,
   Loader2
 } from 'lucide-react';
 import { useAudio } from '../context/AudioContext';
@@ -30,7 +29,6 @@ export default function AudioPlayerBar() {
     volume,
     isLoading,
     isPlayerOpen,
-    setIsPlayerOpen,
     togglePlay,
     seek,
     changeVolume,
@@ -40,8 +38,6 @@ export default function AudioPlayerBar() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (!currentTrack || !isPlayerOpen) return null;
-
-  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
     <div className="fixed bottom-14 lg:bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:w-96 z-40 animate-in slide-in-from-bottom-5 duration-300">

@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import { 
   Users, 
-  MessageSquare, 
   Heart, 
-  Sparkles, 
   ShieldCheck, 
   Send, 
   Plus, 
   AlertCircle,
-  HelpCircle,
   CheckCircle2
 } from 'lucide-react';
 import { initialCommunityPosts, communityRules } from '../data/communityData';
 import { soundFx } from '../utils/audioHelper';
 
-export default function CommunityHub({ userPosts, onAddUserPost }) {
+export default function CommunityHub({ onAddUserPost }) {
   const [posts, setPosts] = useState(initialCommunityPosts);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newContent, setNewContent] = useState('');
@@ -22,9 +19,11 @@ export default function CommunityHub({ userPosts, onAddUserPost }) {
   const [errorMsg, setErrorMsg] = useState('');
   const [successPost, setSuccessPost] = useState(false);
 
-  // Alias Acak Islami
-  const randomSuffix = Math.floor(100 + Math.random() * 900);
-  const [alias, setAlias] = useState(`Mujahid Iffah #${randomSuffix}`);
+  // Alias Acak Islami (lazy initializer)
+  const [alias, setAlias] = useState(() => {
+    const randomSuffix = Math.floor(100 + Math.random() * 900);
+    return `Mujahid Iffah #${randomSuffix}`;
+  });
 
   // Trigger words filter (menjaga agar tidak ada detail maksiat atau link berbahaya)
   const forbiddenKeywords = ['bokep', 'porno', 'link', 'video panas', 'situs', 'http://', 'https://', 'bugil', 'telanjang', 'xxx'];
@@ -198,13 +197,12 @@ export default function CommunityHub({ userPosts, onAddUserPost }) {
               </button>
 
               <button
-                onClick={() => handleSupport}
+                onClick={() => handleSupport(post.id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                   post.hasSupported
                     ? 'bg-teal-600 text-white shadow'
                     : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'
                 }`}
-                onClick={() => handleSupport(post.id)}
               >
                 <Heart className={`w-3.5 h-3.5 ${post.hasSupported ? 'fill-white' : ''}`} />
                 <span>Kuatkan Saudaraku ({post.supportCount})</span>

@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Moon, 
   X, 
   ShieldAlert, 
-  Sparkles, 
-  CheckCircle2, 
-  Bed, 
   Bell, 
-  Droplets, 
-  BookOpen, 
-  Volume2, 
-  ArrowRight,
-  Clock,
   Lock,
   Headphones,
   Check
@@ -23,24 +15,15 @@ import { murottalTracks } from '../data/murottalData';
 
 export default function NightShieldModal({ isOpen, onClose, isForceOpen }) {
   const [completedSteps, setCompletedSteps] = useState([]);
-  const [notificationStatus, setNotificationStatus] = useState('default');
-  const [isSleepModeActive, setIsSleepModeActive] = useState(false);
-  const [dangerHoursSettings, setDangerHoursSettings] = useState(() => {
-    try {
-      const saved = localStorage.getItem('iffah_danger_hours_settings');
-      return saved ? JSON.parse(saved) : { start: '22:00', end: '04:30', autoAlert: true };
-    } catch {
-      return { start: '22:00', end: '04:30', autoAlert: true };
+  const [notificationStatus, setNotificationStatus] = useState(() => {
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      return Notification.permission;
     }
+    return 'default';
   });
+  const [isSleepModeActive, setIsSleepModeActive] = useState(false);
 
   const { playTrack, currentTrack, isPlaying } = useAudio();
-
-  useEffect(() => {
-    if ('Notification' in window) {
-      setNotificationStatus(Notification.permission);
-    }
-  }, []);
 
   const handleRequestNotification = async () => {
     if (!('Notification' in window)) {
