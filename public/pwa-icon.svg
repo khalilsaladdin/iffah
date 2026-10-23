@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022c22" />
+      <stop offset="50%" stop-color="#064e3b" />
+      <stop offset="100%" stop-color="#021c16" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background with rounded corners for maskable icon -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)" />
+
+  <!-- Outer Shield Border -->
+  <path d="M256 60 C360 60 410 110 410 230 C410 360 290 430 256 452 C222 430 102 360 102 230 C102 110 152 60 256 60 Z" 
+        fill="none" 
+        stroke="url(#emeraldGrad)" 
+        stroke-width="10" 
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        opacity="0.8" />
+
+  <!-- Inner Protective Shield Glow -->
+  <path d="M256 82 C342 82 384 124 384 228 C384 338 284 398 256 418 C228 398 128 338 128 228 C128 124 170 82 256 82 Z" 
+        fill="#042f2e" 
+        fill-opacity="0.6" 
+        stroke="url(#goldGrad)" 
+        stroke-width="4" />
+
+  <!-- Arabic Calligraphy "ع" ('Ain for 'Iffah) in pure artistic vector -->
+  <!-- Upper Crescent Hook of 'Ain -->
+  <path d="M285 165 C320 165 345 185 345 210 C345 235 325 250 290 250 C265 250 248 242 235 232 C230 245 220 260 200 272 C175 288 140 295 105 292 C145 272 175 250 188 230 C175 215 168 198 168 180 C168 152 192 135 230 135 C255 135 272 145 285 165 Z"
+        fill="url(#goldGrad)" 
+        filter="url(#glow)" />
+
+  <!-- Dramatic Lower Swoop of 'Ain / Chastity Crescent -->
+  <path d="M232 232 C275 260 330 280 375 270 C340 315 280 345 205 345 C130 345 75 305 75 260 C75 230 95 205 130 195 C115 215 110 235 110 250 C110 280 148 310 210 310 C258 310 298 288 325 258 C285 262 250 250 220 230 Z"
+        fill="url(#emeraldGrad)" />
+
+  <!-- Center Pearl / Sparkle of Purity -->
+  <circle cx="256" cy="205" r="16" fill="#fef08a" filter="url(#glow)" />
+  <circle cx="256" cy="205" r="8" fill="#ffffff" />
+</svg>
