@@ -8,14 +8,20 @@ import IffahVault from './components/IffahVault';
 import JournalHub from './components/JournalHub';
 import PanicModal from './components/PanicModal';
 import InstallPwaModal from './components/InstallPwaModal';
+import NightShieldModal from './components/NightShieldModal';
 import AudioPlayerBar from './components/AudioPlayerBar';
 import { AudioProvider } from './context/AudioContext';
-import { Shield, Heart, Sparkles, Download } from 'lucide-react';
+import { useDangerHours } from './utils/useDangerHours';
+import { Shield, Heart, Sparkles, Download, Moon } from 'lucide-react';
 
 function MainApp() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isPanicOpen, setIsPanicOpen] = useState(false);
   const [isInstallForceOpen, setIsInstallForceOpen] = useState(false);
+  const [isNightShieldOpen, setIsNightShieldOpen] = useState(false);
+
+  // Hook pendeteksi jam rawan malam (22:00 - 04:30)
+  const { isDangerTime, currentHourText } = useDangerHours();
 
   // Persistent Clean Days Streak
   const [streakData, setStreakData] = useState(() => {
@@ -72,12 +78,14 @@ function MainApp() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white pb-20 lg:pb-12">
       
-      {/* Navbar with SOS trigger & PWA installer */}
+      {/* Navbar with SOS trigger, Jam Rawan & PWA installer */}
       <Navbar 
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onOpenPanic={() => setIsPanicOpen(true)}
         onOpenInstall={() => setIsInstallForceOpen(true)}
+        onOpenNightShield={() => setIsNightShieldOpen(true)}
+        isDangerTime={isDangerTime}
         streakDays={streakData.days}
       />
 
@@ -90,6 +98,8 @@ function MainApp() {
             onAddDay={handleAddDay}
             setActiveTab={setActiveTab}
             onOpenPanic={() => setIsPanicOpen(true)}
+            onOpenNightShield={() => setIsNightShieldOpen(true)}
+            isDangerTime={isDangerTime}
           />
         )}
 
@@ -111,6 +121,13 @@ function MainApp() {
       <PanicModal 
         isOpen={isPanicOpen}
         onClose={() => setIsPanicOpen(false)}
+      />
+
+      {/* Benteng Jam Rawan Malam Modal */}
+      <NightShieldModal 
+        isOpen={isNightShieldOpen}
+        onClose={() => setIsNightShieldOpen(false)}
+        isForceOpen={isNightShieldOpen}
       />
 
       {/* PWA Install Banner & Modal */}
@@ -135,14 +152,22 @@ function MainApp() {
 
           <div className="flex items-center gap-4 text-slate-400">
             <button 
+              onClick={() => setIsNightShieldOpen(true)}
+              className="hover:text-indigo-400 flex items-center gap-1 transition-colors"
+            >
+              <Moon className="w-3.5 h-3.5" />
+              <span>Benteng Jam Rawan</span>
+            </button>
+            <span>•</span>
+            <button 
               onClick={() => setIsInstallForceOpen(true)}
               className="hover:text-emerald-400 flex items-center gap-1 transition-colors"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Pasang di Layar Utama (PWA)</span>
+              <span>Pasang App (PWA)</span>
             </button>
             <span>•</span>
-            <span className="text-emerald-400 font-medium">Berdasarkan Al-Qur'an & As-Sunnah</span>
+            <span className="text-emerald-400 font-medium">Al-Qur'an & Sunnah</span>
           </div>
         </div>
       </footer>

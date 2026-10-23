@@ -8,10 +8,19 @@ import {
   Flame, 
   AlertTriangle,
   BookMarked,
-  Download
+  Download,
+  Moon
 } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, onOpenPanic, onOpenInstall, streakDays }) {
+export default function Navbar({ 
+  activeTab, 
+  setActiveTab, 
+  onOpenPanic, 
+  onOpenInstall, 
+  onOpenNightShield,
+  isDangerTime,
+  streakDays 
+}) {
   const navItems = [
     { id: 'dashboard', label: 'Beranda', icon: Shield },
     { id: 'spiritual', label: 'Al-Qur\'an & Sunnah', icon: BookOpen },
@@ -73,14 +82,30 @@ export default function Navbar({ activeTab, setActiveTab, onOpenPanic, onOpenIns
             })}
           </nav>
 
-          {/* Right Action: Install PWA, Streak & SOS */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Right Action: Danger Hours, Install PWA, Streak & SOS */}
+          <div className="flex items-center gap-2 sm:gap-2.5">
             
+            {/* Danger Hours (Jam Rawan) Button */}
+            <button
+              onClick={onOpenNightShield}
+              title={isDangerTime ? "⚠️ Jam Rawan Sedang Aktif! Klik untuk perlindungan" : "Buka Benteng Jam Rawan"}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border text-xs font-semibold transition-all ${
+                isDangerTime
+                  ? 'bg-indigo-950/90 border-indigo-500 text-indigo-300 shadow-lg shadow-indigo-950/80 animate-pulse'
+                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-indigo-300 hover:border-indigo-800/60'
+              }`}
+            >
+              <Moon className="w-3.5 h-3.5 text-indigo-400" />
+              <span className="hidden sm:inline">
+                {isDangerTime ? 'Jam Rawan' : 'Benteng Malam'}
+              </span>
+            </button>
+
             {/* Install PWA Button */}
             <button
               onClick={onOpenInstall}
               title="Pasang Iffah di HP Anda"
-              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-600/60 text-slate-300 hover:text-emerald-300 text-xs font-medium transition-all"
+              className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-600/60 text-slate-300 hover:text-emerald-300 text-xs font-medium transition-all"
             >
               <Download className="w-3.5 h-3.5 text-emerald-400" />
               <span>Pasang App</span>
@@ -104,14 +129,14 @@ export default function Navbar({ activeTab, setActiveTab, onOpenPanic, onOpenIns
             {/* Panic Button (SOS Syahwat) */}
             <button
               onClick={onOpenPanic}
-              className="relative group flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-red-900/30 hover:shadow-red-700/50 hover:scale-105 active:scale-95 transition-all duration-200"
+              className="relative group flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-red-900/30 hover:shadow-red-700/50 hover:scale-105 active:scale-95 transition-all duration-200"
             >
-              <span className="relative flex h-2.5 w-2.5">
+              <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-300 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
               </span>
               <AlertTriangle className="w-4 h-4" />
-              <span className="tracking-wide">SOS Syahwat</span>
+              <span className="tracking-wide">SOS</span>
             </button>
 
           </div>
