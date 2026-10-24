@@ -13,10 +13,21 @@ import {
 import { screeningQuestions, severityLevels } from '../data/screeningData';
 import { soundFx } from '../utils/audioHelper';
 
+function getTimestampIso() {
+  return new Date().toISOString();
+}
+
 export default function ScreeningModal({ isOpen, onClose }) {
   const [currentStep, setCurrentStep] = useState(0); // 0 = intro, 1..8 = questions, 9 = result
   const [answers, setAnswers] = useState({});
-  const [selectedResult, setSelectedResult] = useState(null);
+  const [selectedResult, setSelectedResult] = useState(() => {
+    try {
+      const saved = localStorage.getItem('iffah_screening_result');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
 
   if (!isOpen) return null;
 
@@ -56,7 +67,13 @@ export default function ScreeningModal({ isOpen, onClose }) {
       (lvl) => totalScore >= lvl.minScore && totalScore <= lvl.maxScore
     ) || severityLevels[severityLevels.length - 1];
 
-    setSelectedResult({ totalScore, ...level });
+    const resultObj = { totalScore, ...level, completedAt: getTimestampIso() };
+    setSelectedResult(resultObj);
+    try {
+      localStorage.setItem('iffah_screening_result', JSON.stringify(resultObj));
+    } catch (e) {
+      console.warn('Gagal menyimpan hasil skrining:', e);
+    }
     setCurrentStep(9);
   };
 
