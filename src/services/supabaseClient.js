@@ -1,8 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 
+// Default connection keys for the Iffah Cloud Community
+const DEFAULT_SUPABASE_URL = 'https://vejzlupklbzzfcoveztz.supabase.co';
+const DEFAULT_SUPABASE_ANON_KEY = 'sb_publishable_NZC17FaIGYWK6ZsqdETnpA_Rgb2azTR';
+
 // Default / fallback keys from Vite environment variables
-const ENV_SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';
-const ENV_SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const ENV_SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL;
+const ENV_SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY;
 
 let cachedClient = null;
 
