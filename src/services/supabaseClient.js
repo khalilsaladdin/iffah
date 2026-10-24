@@ -6,13 +6,23 @@ const ENV_SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
 let cachedClient = null;
 
+export function cleanSupabaseUrl(rawUrl) {
+  if (!rawUrl) return '';
+  return rawUrl.trim()
+    .replace(/\/rest\/v1\/?$/, '')
+    .replace(/\/+$/, '');
+}
+
 export function getStoredSupabaseConfig() {
   try {
     const stored = localStorage.getItem('iffah_supabase_config');
     if (stored) {
       const parsed = JSON.parse(stored);
       if (parsed.url && parsed.key) {
-        return parsed;
+        return {
+          url: cleanSupabaseUrl(parsed.url),
+          key: parsed.key.trim()
+        };
       }
     }
   } catch (e) {
@@ -21,13 +31,13 @@ export function getStoredSupabaseConfig() {
 
   if (ENV_SUPABASE_URL && ENV_SUPABASE_ANON_KEY) {
     return {
-      url: ENV_SUPABASE_URL,
-      key: ENV_SUPABASE_ANON_KEY,
+      url: cleanSupabaseUrl(ENV_SUPABASE_URL),
+      key: ENV_SUPABASE_ANON_KEY.trim(),
       isFromEnv: true
     };
   }
 
-  return { url: '', key: '', isFromEnv: false };
+  return { url: cleanSupabaseUrl(ENV_SUPABASE_URL), key: '', isFromEnv: false };
 }
 
 export function isSupabaseConfigured() {
@@ -67,7 +77,7 @@ export function saveSupabaseConfig(url, key) {
       cachedClient = null;
       return false;
     }
-    const cleanUrl = url.trim().replace(/\/$/, '');
+    const cleanUrl = cleanSupabaseUrl(url);
     const cleanKey = key.trim();
     localStorage.setItem(
       'iffah_supabase_config',

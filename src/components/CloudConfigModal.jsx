@@ -37,12 +37,13 @@ export default function CloudConfigModal({ isOpen, onClose, onConfigSaved }) {
       return;
     }
 
-    if (!url.startsWith('https://')) {
+    const cleanUrl = url.trim().replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
+    if (!cleanUrl.startsWith('https://')) {
       setStatusMessage({ type: 'error', text: 'Project URL harus diawali dengan https://' });
       return;
     }
 
-    const success = saveSupabaseConfig(url, key);
+    const success = saveSupabaseConfig(cleanUrl, key);
     if (success) {
       soundFx.playCelebrationTone();
       setStatusMessage({ 
