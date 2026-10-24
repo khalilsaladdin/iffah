@@ -1,59 +1,65 @@
-# Panduan Deployment Platform Iffah (عِفَّة) ke Hosting Publik
+# Panduan Publikasi & Deployment Platform Iffah (عِفَّة)
 
-Semua file konfigurasi (`vercel.json`, `netlify.toml`, `public/_redirects`) dan bundle produksi (`dist/`) sudah siap 100%. Pilih salah satu cara termudah berikut:
+Website Iffah sudah dikonfigurasi secara lengkap untuk langsung online ke internet secara gratis, aman dengan HTTPS/SSL, dan bisa diinstal sebagai aplikasi HP (PWA).
+
+Repository GitHub Anda: **`https://github.com/khalilsaladdin/iffah`**
 
 ---
 
-## Cara 1: Drag & Drop ke Netlify (Paling Cepat — 10 Detik)
-Tanpa install apapun dan tanpa terminal!
+## ⚡ Langkah 0: Sinkronkan Kode Terbaru via GitHub Desktop (3 Detik)
 
-1. Buka browser dan kunjungi: **[https://app.netlify.com/drop](https://app.netlify.com/drop)**
-2. Buka Windows File Explorer dan arahkan ke folder:
+1. Buka aplikasi **GitHub Desktop** di komputer Anda.
+2. Anda akan melihat tombol biru di kanan atas: **"Push origin"** (ada commit terbaru yang siap dikirim).
+3. Klik tombol **"Push origin"**. Semua kode terbaru Iffah langsung terkirim ke GitHub Anda!
+
+---
+
+## 🚀 Pilihan 1: Deploy ke Vercel (SANGAT DIREKOMENDASIKAN - Paling Stabil & Cepat)
+
+Vercel adalah platform hosting cloud modern yang memberikan performa tercepat, SSL gratis, dan domain otomatis:
+
+1. Buka **[https://vercel.com](https://vercel.com)** di browser.
+2. Klik **"Sign Up"** atau **"Log In"** ➔ Pilih **"Continue with GitHub"**.
+3. Di Dashboard Vercel, klik tombol **"Add New..."** ➔ **"Project"**.
+4. Di daftar repository, Anda akan melihat **`iffah`** (atau cari `iffah`). Klik tombol **"Import"**.
+5. Vercel secara otomatis mengenali framework **Vite**. Anda **tidak perlu mengubah setting apapun**.
+6. Klik tombol biru **"Deploy"**.
+7. Tunggu sekitar 20-30 detik.
+8. 🎉 **Selesai!** Vercel akan menampilkan kembang api dan memberikan tautan resmi Anda (contoh: `https://iffah-eight.vercel.app` atau `https://iffah.vercel.app`).
+   - Setiap kali Anda klik *Push* di GitHub Desktop di kemudian hari, Vercel akan otomatis meng-update website dalam hitungan detik!
+
+---
+
+## 🌐 Pilihan 2: Mengaktifkan GitHub Pages (100% di Dalam GitHub)
+
+Kami telah memasang file otomatisasi **GitHub Actions** (`.github/workflows/deploy.yml`) di repository Anda.
+
+1. Buka repository Anda di browser: **[https://github.com/khalilsaladdin/iffah](https://github.com/khalilsaladdin/iffah)**.
+2. Klik tab **Settings** (di menu atas repository).
+3. Di bilah menu sebelah kiri, klik **Pages**.
+4. Pada bagian **"Build and deployment"** ➔ **Source**:
+   - Ubah dari *Deploy from a branch* menjadi **`GitHub Actions`**.
+5. Selesai! GitHub akan otomatis menjalankan build dan menerbitkan website Anda di:
+   👉 **`https://khalilsaladdin.github.io/iffah/`**
+
+---
+
+## 📦 Pilihan 3: Netlify Drop (Instan 10 Detik Tanpa Login)
+
+Jika Anda ingin langsung mendapatkan link saat ini juga tanpa login:
+
+1. Buka: **[https://app.netlify.com/drop](https://app.netlify.com/drop)**
+2. Buka folder explorer di komputer:
    `C:\Users\62877\.gemini\antigravity\scratch\iffah\dist`
-3. Tarik (*drag & drop*) folder **`dist`** tersebut ke dalam area kotak di website Netlify Drop.
-4. Selesai! Website Anda langsung online dan mendapatkan link publik (misal: `https://iffah-suaka.netlify.app`).
-5. Anda bisa login gratis di Netlify untuk mengubah nama subdomainnya secara bebas.
+3. Drag (tarik) folder **`dist`** tersebut dan lepaskan (*drop*) ke kotak di website Netlify Drop.
+4. Dalam 5 detik, website langsung aktif dengan link publik Netlify!
 
 ---
 
-## Cara 2: Deploy Menggunakan Vercel CLI (Via Terminal)
-Vercel CLI sudah terpasang.
-
-1. Buka PowerShell / Terminal di folder proyek:
-   ```powershell
-   cd C:\Users\62877\.gemini\antigravity\scratch\iffah
-   npx vercel
-   ```
-2. Ikuti panduan di layar:
-   - Tekan `y` untuk login (akan membuka browser untuk verifikasi akun Vercel/GitHub gratis).
-   - Pilih *Set up and deploy?* ➔ Ketik `y`.
-   - Pilih scope / nama project ➔ Tekan `Enter` (default: `iffah`).
-   - *In which directory is your code located?* ➔ Tekan `Enter` (`./`).
-   - *Want to modify settings?* ➔ Ketik `N`.
-3. Dalam hitungan detik, Vercel akan memberikan link website yang aktif (misal: `https://iffah.vercel.app`).
-4. Untuk update produksi di masa mendatang, cukup jalankan:
-   ```powershell
-   npx vercel --prod
-   ```
-
----
-
-## Cara 3: Menghubungkan GitHub ke Vercel (Rekomendasi Terbaik Jangka Panjang)
-Otomatis memperbarui website setiap kali ada perubahan kode.
-
-1. Buat repository baru di **[GitHub.com](https://github.com/new)** dengan nama `iffah`.
-2. Upload kode proyek ini ke GitHub.
-3. Buka **[Vercel.com](https://vercel.com)** ➔ Klik **"Add New Project"** ➔ Pilih repository `iffah`.
-4. Vercel akan mendeteksi `Vite` secara otomatis. Klik **"Deploy"**.
-5. Selesai!
-
----
-
-## Cara Memasang Custom Domain (Contoh: `iffah.id` atau `iffah.app`)
-Setelah website aktif di Vercel atau Netlify:
-1. Masuk ke dashboard proyek di Vercel/Netlify.
-2. Buka menu **Settings ➔ Domains**.
-3. Masukkan nama domain yang Anda beli (misal: `iffah.id`).
-4. Vercel/Netlify akan memberikan **DNS Record** (A Record atau CNAME).
-5. Masukkan record tersebut ke panel tempat Anda membeli domain (misal: Niagahoster, Domainesia, Rumahweb, Namecheap, Cloudflare).
-6. SSL / HTTPS (gembok hijau aman) akan aktif otomatis dalam beberapa menit.
+## 📱 Cara Membagikan & Menginstal ke HP Jamaah/Teman:
+Setelah link (Vercel / GitHub Pages / Netlify) didapatkan:
+1. Kirim link tersebut lewat WhatsApp / Telegram.
+2. Saat orang lain membukanya di browser HP (Chrome / Safari):
+   - Di Android: Muncul banner *"Install Iffah"* atau tombol *"Tambah ke Layar Utama"*.
+   - Di iPhone: Ketuk tombol Share (ikon panah ke atas) ➔ pilih *"Add to Home Screen"*.
+3. Aplikasi akan terpasang di HP layaknya aplikasi native dari App Store / Play Store, lengkap dengan audio murottal latar belakang dan proteksi privasi!
