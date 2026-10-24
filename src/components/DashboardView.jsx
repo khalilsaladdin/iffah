@@ -13,7 +13,9 @@ import {
   Plus,
   Moon,
   Lock,
-  Sun
+  Sun,
+  Brain,
+  ClipboardCheck
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { soundFx } from '../utils/audioHelper';
@@ -25,6 +27,7 @@ export default function DashboardView({
   setActiveTab, 
   onOpenPanic,
   onOpenNightShield,
+  onOpenScreening,
   isDangerTime 
 }) {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -153,14 +156,52 @@ export default function DashboardView({
               <span>Buka Materi Al-Qur'an & Sunnah</span>
             </button>
             <button
+              onClick={onOpenScreening}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-amber-200 font-semibold text-xs sm:text-sm transition-all hover:scale-105 backdrop-blur-md"
+            >
+              <Brain className="w-4 h-4 text-amber-300" />
+              <span>Tes Tingkat Ketergantungan (CPAS)</span>
+            </button>
+            <button
               onClick={() => setActiveTab('community')}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900/70 hover:bg-slate-800 border border-white/20 text-slate-100 font-semibold text-xs sm:text-sm transition-all backdrop-blur-md"
             >
               <Users className="w-4 h-4 text-emerald-400" />
-              <span>Kunjungi Halaqah Dukungan</span>
+              <span>Halaqah Dukungan</span>
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Dedicated Screening Self-Assessment Banner */}
+      <div 
+        onClick={onOpenScreening}
+        className="group cursor-pointer rounded-3xl bg-gradient-to-r from-amber-950/50 via-slate-900/85 to-emerald-950/50 border border-amber-400/40 hover:border-amber-400/80 p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5"
+      >
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-inner">
+            <ClipboardCheck className="w-7 h-7" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 bg-amber-950/80 border border-amber-600/60 px-2.5 py-0.5 rounded-full">
+                Diagnosis Klinis & Tazkiyah
+              </span>
+              <span className="text-[11px] text-slate-300">Waktu: 2-3 Menit</span>
+            </div>
+            <h4 className="text-sm sm:text-base font-bold text-white group-hover:text-amber-200 transition-colors mt-0.5">
+              Tes Skrining Mandiri: Seberapa Dalam Jerat Pornografi pada Otak & Jiwamu?
+            </h4>
+            <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">
+              Ketahui fase adiksi, kondisi Prefrontal Cortex (PFC), dan dapatkan rencana aksi detoks yang tepat. 100% Rahasia & Anonim.
+            </p>
+          </div>
+        </div>
+
+        <button className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold text-xs shadow-lg shadow-amber-950/60 transition-all group-hover:scale-105 shrink-0">
+          <span>Ikuti Tes Gratis</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
 
       {/* Main Grid: Streak Counter & Maqam Status */}

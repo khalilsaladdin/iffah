@@ -10,11 +10,12 @@ import PanicModal from './components/PanicModal';
 import InstallPwaModal from './components/InstallPwaModal';
 import NightShieldModal from './components/NightShieldModal';
 import ThemeSelectorModal from './components/ThemeSelectorModal';
+import ScreeningModal from './components/ScreeningModal';
 import AudioPlayerBar from './components/AudioPlayerBar';
 import { AudioProvider } from './context/AudioContext';
 import { useDangerHours } from './utils/useDangerHours';
 import { backgroundThemes } from './data/backgroundThemes';
-import { Download, Moon } from 'lucide-react';
+import { Download, Moon, ClipboardCheck } from 'lucide-react';
 
 function MainApp() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -22,6 +23,7 @@ function MainApp() {
   const [isInstallForceOpen, setIsInstallForceOpen] = useState(false);
   const [isNightShieldOpen, setIsNightShieldOpen] = useState(false);
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
+  const [isScreeningOpen, setIsScreeningOpen] = useState(false);
 
   // Background Theme: Default Sunrise Fajar Harapan (Vibe Positif & Hangat)
   const [activeThemeId, setActiveThemeId] = useState(() => {
@@ -122,6 +124,7 @@ function MainApp() {
           onOpenInstall={() => setIsInstallForceOpen(true)}
           onOpenNightShield={() => setIsNightShieldOpen(true)}
           onOpenThemeModal={() => setIsThemeModalOpen(true)}
+          onOpenScreening={() => setIsScreeningOpen(true)}
           activeThemeIcon={activeTheme.icon}
           isDangerTime={isDangerTime}
           streakDays={streakData.days}
@@ -137,6 +140,7 @@ function MainApp() {
               setActiveTab={setActiveTab}
               onOpenPanic={() => setIsPanicOpen(true)}
               onOpenNightShield={() => setIsNightShieldOpen(true)}
+              onOpenScreening={() => setIsScreeningOpen(true)}
               isDangerTime={isDangerTime}
             />
           )}
@@ -176,13 +180,19 @@ function MainApp() {
           onSelectTheme={handleSelectTheme}
         />
 
+        {/* Tes Skrining Mandiri Modal */}
+        <ScreeningModal 
+          isOpen={isScreeningOpen}
+          onClose={() => setIsScreeningOpen(false)}
+        />
+
         {/* PWA Install Banner & Modal */}
         <InstallPwaModal 
           isForceOpen={isInstallForceOpen}
           onCloseForce={() => setIsInstallForceOpen(false)}
         />
 
-        {/* Footer with Theme Pill */}
+        {/* Footer with Theme Pill & Quick Links */}
         <footer className="border-t border-white/10 bg-slate-950/80 backdrop-blur-xl py-8 px-4 text-center text-xs text-slate-400 mt-12">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
@@ -197,6 +207,14 @@ function MainApp() {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-4 text-slate-300">
+              <button 
+                onClick={() => setIsScreeningOpen(true)}
+                className="hover:text-amber-300 flex items-center gap-1.5 transition-colors font-medium text-amber-300/90"
+              >
+                <ClipboardCheck className="w-3.5 h-3.5 text-amber-400" />
+                <span>Tes Skrining CPAS</span>
+              </button>
+              <span>•</span>
               <button 
                 onClick={() => setIsThemeModalOpen(true)}
                 className="hover:text-amber-300 flex items-center gap-1.5 transition-colors font-medium"

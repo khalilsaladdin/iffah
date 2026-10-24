@@ -9,7 +9,8 @@ import {
   AlertTriangle, 
   BookMarked,
   Download,
-  Moon
+  Moon,
+  ClipboardCheck
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -19,6 +20,7 @@ export default function Navbar({
   onOpenInstall, 
   onOpenNightShield,
   onOpenThemeModal,
+  onOpenScreening,
   activeThemeIcon,
   isDangerTime,
   streakDays 
@@ -84,9 +86,19 @@ export default function Navbar({
             })}
           </nav>
 
-          {/* Right Action: Suasana Theme, Danger Hours, Install PWA, Streak & SOS */}
+          {/* Right Action: Tes Skrining, Suasana, Jam Rawan, Install PWA, Streak & SOS */}
           <div className="flex items-center gap-2 sm:gap-2.5">
             
+            {/* Tes Skrining Button */}
+            <button
+              onClick={onOpenScreening}
+              title="Ikuti Tes Skrining Tingkat Ketergantungan (CPAS)"
+              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 hover:border-amber-400 text-amber-300 hover:text-amber-200 text-xs font-semibold transition-all backdrop-blur-md shadow"
+            >
+              <ClipboardCheck className="w-3.5 h-3.5 text-amber-400" />
+              <span>Tes Skrining</span>
+            </button>
+
             {/* Theme Selector Button */}
             <button
               onClick={onOpenThemeModal}
